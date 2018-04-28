@@ -8,6 +8,14 @@ sleep 5
 sudo apt-get update
 sleep 5
 sudo apt-get install libdb4.8-dev libdb4.8++-dev
+
+# Install and configure the machines firewall
+sudo apt-get install ufw
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow ssh
+sudo ufw allow 33820
+sudo ufw enable
 echo " "
 echo " "
 echo " "
