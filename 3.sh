@@ -21,6 +21,7 @@ Lindad stop
 cd ~/.Linda
 rm -rf database txleveldb blk0001.dat peers.dat
 unzip ~/LindaBootstrap.zip -d ~/.Linda
+rm ~/.Linda/autoBootstrap.cmd
 
 # Move the Lind.conf file and promot user finalise with their details
 mv ~/Lindacoin/Linda.conf ~/.Linda/Linda.conf
