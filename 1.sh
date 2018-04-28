@@ -1,7 +1,5 @@
 cd ~/
-apt-get update
-sleep 5
-apt-get upgrade
+sudo apt-get update && sudo apt-get -y upgrade
 sleep 5
 fallocate -l 3G /swapfile
 chmod 600 /swapfile
