@@ -1,4 +1,4 @@
-cd /root/
+cd ~/
 rm -rf Lindacoin
 rm -rf https://github.com/Lindacoin/Linda/releases/download/2.0.0.1/Unix.Lindad.v2.0.0.1g.tar.gz
 echo " "

@@ -1,4 +1,4 @@
-cd /root/
+cd ~/
 apt-get update
 sleep 5
 apt-get upgrade

@@ -1,4 +1,4 @@
-cd /root/
+cd ~/
 sudo apt-get install -y pkg-config
 sleep 5
 sudo apt-get -y install build-essential autoconf automake libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
