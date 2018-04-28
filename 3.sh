@@ -15,6 +15,7 @@ echo " "
 echo " "
 sleep 30
 Lindad stop
+mv ~/Lindacoin/Linda.conf ~/.Linda/Linda.conf
 cd ~/
 sudo nano ~/.Linda/Linda.conf
 echo " "
