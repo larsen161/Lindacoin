@@ -27,14 +27,14 @@ mv ~/Lindacoin/Linda.conf ~/.Linda/Linda.conf
 cd ~/
 sudo nano ~/.Linda/Linda.conf
 
-# Run the Linda wallet
-Lindad
-
 # Cleanup steps
 cd ~/
 rm -rf Lindacoin
 rm -rf https://github.com/Lindacoin/Linda/releases/download/2.0.0.1/Unix.Lindad.v2.0.0.1g.tar.gz
 rm ~/LindaBootstrap.zip
+
+# Run the Linda wallet
+Lindad
 echo " "
 echo " "
 echo " "
