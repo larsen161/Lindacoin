@@ -1,4 +1,4 @@
-sudo apt-get update && sudo apt-get -y upgrade
+sudo apt update && sudo apt -y upgrade
 cd ~/
 wget https://github.com/Lindacoin/Linda/releases/download/2.0.0.1/Unix.Lindad.v2.0.0.1g.tar.gz
 curl -L https://www.dropbox.com/sh/0s9apwcl0uhlpmy/AABysrq0PEosSaHQKGyxCTioa?dl=1 > LindaBootstrap.zip
