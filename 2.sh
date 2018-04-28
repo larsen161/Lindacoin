@@ -1,3 +1,6 @@
+# try to prevent any archive.ubuntu.com issuess
+sudo echo -e "precedence ::ffff:0:0/96 100" >> /etc/gai.conf
+
 cd ~/
 sudo apt-get -y install pkg-config
 sleep 5
