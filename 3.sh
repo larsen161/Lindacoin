@@ -1,7 +1,6 @@
 sudo apt update && sudo apt -y upgrade
 cd ~/
 wget https://github.com/Lindacoin/Linda/releases/download/2.0.0.1/Unix.Lindad.v2.0.0.1g.tar.gz
-curl -L https://www.dropbox.com/sh/0s9apwcl0uhlpmy/AABysrq0PEosSaHQKGyxCTioa?dl=1 > LindaBootstrap.zip
 tar -xzvf Unix.Lindad.v2.0.0.1g.tar.gz -C /usr/local/bin/
 Lindad -daemon
 echo " "
@@ -18,11 +17,11 @@ echo " "
 sleep 30
 Lindad stop
 
-# Remove default files and extract the bootstrap
+# Get the bootstrap, remove default files then extract thbootstrap
 cd ~/.Linda
+wget https://transfer.sh/meqlu/linda-v2-bootstrap-2018-04-26.tar.gz
 rm -rf database txleveldb blk0001.dat peers.dat
-unzip ~/LindaBootstrap.zip -d ~/.Linda
-rm ~/.Linda/autoBootstrap.cmd
+tar xvf linda-v2-bootstrap-2018-04-26.tar.gz
 
 # Move the Lind.conf file and promot user finalise with their details
 mv ~/Lindacoin/Linda.conf ~/.Linda/Linda.conf
