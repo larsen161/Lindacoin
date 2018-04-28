@@ -1,7 +1,7 @@
 cd ~/
 sudo apt-get -y install pkg-config
 sleep 5
-sudo apt-get -y install build-essential autoconf automake libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
+sudo apt-get -y install unzip build-essential autoconf automake libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
 sleep 5
 sudo add-apt-repository ppa:bitcoin/bitcoin
 sleep 5
