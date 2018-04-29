@@ -19,7 +19,7 @@ Lindad stop
 
 # Get the bootstrap, remove default files then extract thbootstrap
 cd ~/.Linda
-wget https://transfer.sh/meqlu/linda-v2-bootstrap-2018-04-26.tar.gz
+wget https://transfer.sh/fNj2o/linda-v2-bootstrap-2018-04-29.tar.gz
 rm -rf database txleveldb blk0001.dat peers.dat
 tar xvf linda-v2-bootstrap-2018-04-26.tar.gz
 
