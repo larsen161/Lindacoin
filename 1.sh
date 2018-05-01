@@ -1,10 +1,10 @@
 cd ~/
 sudo apt-get update && sudo apt-get -y upgrade
 sleep 5
-fallocate -l 3G /swapfile
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
+sudo fallocate -l 3G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
 sudo echo -e "/swapfile none swap sw 0 0 \n" >> /etc/fstab
 echo " "
 echo " "
@@ -18,4 +18,4 @@ echo " "
 echo " "
 echo " "
 sleep 10
-reboot
+sudo reboot now
