@@ -19,9 +19,9 @@ Lindad stop
 
 # Get the bootstrap, remove default files then extract thbootstrap
 cd ~/.Linda
-wget https://transfer.sh/fNj2o/linda-v2-bootstrap-2018-04-29.tar.gz
+wget https://transfer.sh/sPC2X/linda-v2-bootstrap-2018-05-01.tar.gz 
 rm -rf database txleveldb blk0001.dat peers.dat
-tar xvf linda-v2-bootstrap-2018-04-26.tar.gz
+tar xvf linda-v2-bootstrap-2018-05-01.tar.gz
 
 # Move the Lind.conf file and promot user finalise with their details
 mv ~/Lindacoin/Linda.conf ~/.Linda/Linda.conf
