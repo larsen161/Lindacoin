@@ -1,5 +1,3 @@
-sudo apt update && sudo apt -y upgrade
-cd ~/
 wget https://github.com/Lindacoin/Linda/releases/download/2.0.0.1/Unix.Lindad.v2.0.0.1g.tar.gz
 tar -xzvf Unix.Lindad.v2.0.0.1g.tar.gz -C /usr/local/bin/
 Lindad -daemon
