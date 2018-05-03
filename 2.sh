@@ -43,15 +43,20 @@ tar xvf linda-v2-bootstrap-2018-05-03.tar.gz
 rpcuser=$(date +%s | sha256sum | base64 | head -c 8)
 rpcpassword=$(date +%s | sha256sum | base64 | head -c 20)
 
+# Get server IP address
+ipaddress=$(curl ipinfo.io/ip)
+
 # Generate the Lind.conf file with saved variable
-echo "rpcuser=$rpcuser
-rpcpassword=$rpcpassword
+echo "rpcuser=${rpcuser}
+rpcpassword=${rpcpassword}
 rpcallowip=127.0.0.1
 server=1
 listen=1
 daemon=1
 logtimestamps=1
 maxconnections=256
+masternode=1
+masternodeprivkey=${masternodegenkey}"
 addnode=seed1.linda-wallet.com
 addnode=seed2.linda-wallet.com
 addnode=seed3.linda-wallet.com
@@ -62,9 +67,7 @@ addnode=seed7.linda-wallet.com
 addnode=seed8.linda-wallet.com
 addnode=seed9.linda-wallet.com
 addnode=seed10.linda-wallet.com
-addnode=seed11.linda-wallet.com
-masternode=1
-masternodeprivkey=$masternodegenkey" > ~/.Linda/Linda.conf
+addnode=seed11.linda-wallet.com" > ~/.Linda/Linda.conf
 
 mv ~/Lindacoin/Linda.conf ~/.Linda/Linda.conf
 cd ~/
