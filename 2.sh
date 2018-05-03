@@ -35,9 +35,9 @@ Lindad stop
 
 # Get the bootstrap, remove default files then extract thbootstrap
 cd ~/.Linda
-wget https://transfer.sh/sPC2X/linda-v2-bootstrap-2018-05-01.tar.gz
+wget https://transfer.sh/N4OpZ/linda-v2-bootstrap-2018-05-03.tar.gz 
 rm -rf database txleveldb blk0001.dat peers.dat
-tar xvf linda-v2-bootstrap-2018-05-01.tar.gz
+tar xvf linda-v2-bootstrap-2018-05-03.tar.gz
 
 # Generate random rpc credentials
 rpcuser=$(date +%s | sha256sum | base64 | head -c 8)
