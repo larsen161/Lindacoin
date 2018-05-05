@@ -30,9 +30,9 @@ Lindad stop
 
 # Get the bootstrap, remove default files then extract thbootstrap
 cd ~/.Linda
-wget https://transfer.sh/N4OpZ/linda-v2-bootstrap-2018-05-03.tar.gz 
+wget -O bootstrap.tar.gz https://transfer.sh/N4OpZ/linda-v2-bootstrap-2018-05-03.tar.gz
 rm -rf database txleveldb blk0001.dat peers.dat
-tar xvf linda-v2-bootstrap-2018-05-03.tar.gz
+tar xvf bootstrap.tar.gz
 
 # Generate random rpc credentials
 rpcuser=$(date +%s | sha256sum | base64 | head -c 8)
@@ -72,7 +72,7 @@ sudo nano ~/.Linda/Linda.conf
 cd ~/
 rm -rf Lindacoin
 rm -rf https://github.com/Lindacoin/Linda/releases/download/2.0.0.1/Unix.Lindad.v2.0.0.1g.tar.gz
-rm ~/LindaBootstrap.zip
+rm ~/bootstrap.tar.gz
 
 # Run the Linda wallet
 Lindad
