@@ -9,11 +9,6 @@ sudo apt update && sudo apt -y upgrade
 wget https://github.com/Lindacoin/Linda/releases/download/2.0.0.1/Unix.Lindad.v2.0.0.1g.tar.gz
 tar -xzvf Unix.Lindad.v2.0.0.1g.tar.gz -C /usr/local/bin/
 Lindad -daemon
-
-# Generate and save the masternode privkey to a variable
-sleep 15
-masternodeprivkey=$(Lindad masternode genkey)
-
 echo " "
 echo " "
 echo " "
@@ -25,12 +20,12 @@ echo " "
 echo " "
 echo " "
 echo " "
-sleep 15
+sleep 30
 Lindad stop
 
 # Get the bootstrap, remove default files then extract thbootstrap
 cd ~/.Linda
-wget -O bootstrap.tar.gz https://transfer.sh/N4OpZ/linda-v2-bootstrap-2018-05-03.tar.gz
+wget -O bootstrap.tar.gz https://transfer.sh/PfkAN/linda-v2-bootstrap-2018-05-05.tar.gz 
 rm -rf database txleveldb blk0001.dat peers.dat
 tar xvf bootstrap.tar.gz
 
@@ -40,6 +35,10 @@ rpcpassword=$(date +%s | sha256sum | base64 | head -c 20)
 
 # Get server IP address
 ipaddress=$(curl ipinfo.io/ip)
+
+# Ask user for masternode genkey
+echo -n "Enter your cold wallet genkey value & press Enter: "
+read masternodegenkey
 
 # Generate the Lind.conf file with saved variable
 echo "rpcuser=${rpcuser}
