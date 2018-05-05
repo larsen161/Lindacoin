@@ -1,11 +1,6 @@
 cd ~/
 # Install and configure the machines firewall
-sudo apt-get install ufw
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-sudo ufw allow ssh
-sudo ufw allow 33820
-sudo ufw enable
+sudo apt-get install fail2ban
 
 # Install any additional updates
 sudo apt update && sudo apt -y upgrade
