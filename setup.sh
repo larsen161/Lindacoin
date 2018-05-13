@@ -109,7 +109,7 @@ linda_conf_mn () {
 echo "masternode=1
 masternodeaddr=${ipaddress}:${port}
 masternodeprivkey=${masternodegenkey}
-" > ~/Linda.conf
+" >> ~/Linda.conf
 }
 
 linda_conf_stake () {
