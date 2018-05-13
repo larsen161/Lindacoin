@@ -134,7 +134,6 @@ linda_startup () {
   if [ $counter != 0 ]; then
     sed '$i<Lindad0${counter}>!' >> /etc/rc.local
   fi
-
 }
 
 masternode_conf () {
@@ -158,7 +157,6 @@ source ~/.bashrc
 linda_complete () {
   # Start Lindad and show user information about the wallet and block progress
   Lindad
-  sleep 5
   echo " "
   echo " "
   echo " "
@@ -171,24 +169,38 @@ linda_complete () {
   echo "************************************************"
   echo " "
   echo " "
-  sleep 5
+  sleep 10 
   cat ~/.Linda/Linda.conf
+}
+
+linda_showaddress () {
   echo " "
-  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
   echo " "
   echo " This is your default Linda address you can send coins to"
   echo " "
-  echo " "
   Lindad listreceivedbyaddress 0 true
   echo " "
-  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+}
+
+linda_showblocks () {
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
   echo " "
   echo " Your wallet is currently sync'd up to this block"
   echo " To find the latest block, look for Current block at"
   echo " https://prohashing.com/explorer/Lindacoin/"
   echo " "
-  echo " "
   Lindad getinfo | grep blocks
+  echo " "
+}
+
+masternode_debug () {
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  echo " " 
+  echo " Once sync is complete, run 'Lindad masternode debug'" 
+  echo " It should then show: 'masternode started remotely'"
+  echo " "
+  Lindad masternode debug
 }
 
 echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
@@ -217,6 +229,8 @@ do
         mv ~/Linda.conf ~/.Linda/
 
         linda_complete
+        linda_showaddress
+        linda_showblock
 
         break
         ;;
@@ -244,18 +258,12 @@ do
         mv ~/Linda.conf ~/.Linda/
 
         linda_complete
+        linda_showaddress
+        linda_showblock
 
         break
         ;;
     'Control Masternode (Hot/Cool)')
-        echo "This option is not fully tested yet"
-        echo "This option is not fully tested yet"
-        echo "This option is not fully tested yet"
-        echo "This option is not fully tested yet"
-        echo " "
-        echo " "
-        echo " "
-        sleep 15
         # Ask user for masternode genkey
         echo -n "Enter your cool wallet genkey value & press Enter: "
         read -r masternodegenkey
@@ -274,11 +282,14 @@ do
         mv ~/Linda.conf ~/.Linda/
 
         linda_complete
+        linda_showblocks
 
         break
         ;;
     'Multiple Control Masternodes (Hot/Cool)')
       echo -n "This option is not completed yet"
+      echo "This option is not completed yet"
+      echo " "
         break
         ipv6_exist=$(/sbin/ifconfig ens3 | awk '/inet6/{print $3}' | grep 2001 | awk 'NR == 1 {print $1}' | wc -l)
         if [[ $ipv6_exists = 0 ]]; then
