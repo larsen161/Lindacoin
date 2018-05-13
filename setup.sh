@@ -139,10 +139,8 @@ linda_complete () {
   echo "************************************************"
   echo " "
   echo " "
-  echo " "
   sleep 5
   cat ~/.Linda/Linda.conf
-  echo " "
   echo " "
   echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
   echo " "
