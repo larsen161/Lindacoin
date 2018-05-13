@@ -252,6 +252,9 @@ do
         echo "This option is not fully tested yet"
         echo "This option is not fully tested yet"
         echo "This option is not fully tested yet"
+        echo " "
+        echo " "
+        echo " "
         sleep 15
         # Ask user for masternode genkey
         echo -n "Enter your cool wallet genkey value & press Enter: "
