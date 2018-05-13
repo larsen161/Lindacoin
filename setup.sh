@@ -389,7 +389,7 @@ do
       sleep 10
 
       counter=1
-        until [ $counter -ge $int ]; then
+        until [ $counter -ge $int ]
           do
             addressalias=$(Lindad )
             output=$(Lindad masternode outputs | awk 'NR == "(($counter + 1))" {print $1}')
