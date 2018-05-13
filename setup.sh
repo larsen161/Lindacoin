@@ -24,8 +24,8 @@ fi
 temp_linda (){
   # Make the Linda folder and default files
   mkdir ~/.Linda
-  touch Linda.conf
-  cat dev/null > Linda.conf
+  touch ~/Linda.conf
+  cat dev/null > ~/Linda.conf
 }
 
 install_security () {
@@ -193,6 +193,7 @@ do
         linda_conf_core
         linda_conf_listen_yes
         linda_conf_seeds
+        cp ~/Linda.conf ~/.Linda
 
         Lindad
         sleep 20
