@@ -151,8 +151,6 @@ linda_complete () {
   echo " "
   Lindad listreceivedbyaddress 0 true
   echo " "
-  echo " "
-  echo " "  
   echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
   echo " "
   echo " Your wallet is currently sync'd up to this block"
