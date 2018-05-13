@@ -248,10 +248,10 @@ do
         break
         ;;
     'Control Masternode (Hot/Cool)')
-        echo -n "This option is not fully tested yet"
-        echo -n "This option is not fully tested yet"
-        echo -n "This option is not fully tested yet"
-        echo -n "This option is not fully tested yet"
+        echo "This option is not fully tested yet"
+        echo "This option is not fully tested yet"
+        echo "This option is not fully tested yet"
+        echo "This option is not fully tested yet"
         sleep 15
         # Ask user for masternode genkey
         echo -n "Enter your cool wallet genkey value & press Enter: "
