@@ -4,9 +4,10 @@
 sudo apt-get update && sudo apt-get -y upgrade
 sleep 5
 
+# Set the default Lindad port
 port=33820
 
-# Check if a swap file exists and create if one doesn't
+# Check if a swap file exists and create if one doesn't exist
 if free | awk '/^Swap:/ {exit !$2}'; then
     echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     echo "!                                                     !"
@@ -25,7 +26,7 @@ temp_linda (){
   # Make the Linda folder and default files
   mkdir ~/.Linda
   touch ~/Linda.conf
-  cat dev/null > ~/Linda.conf
+  cat /dev/null > ~/Linda.conf
 }
 
 install_security () {
@@ -58,7 +59,7 @@ get_ip () {
 }
 
 linda_conf_core () {
-# Append info to a Staking Wallet Lind.conf file
+# Append info to a Lind.conf file
 echo "rpcuser=${rpcuser}
 rpcpassword=${rpcpassword}
 rpcallowip=127.0.0.1
@@ -70,31 +71,37 @@ maxconnections=128
 }
 
 linda_conf_listen_yes () {
+# Append info to a Lind.conf file
 echo "listen=1
 "  >> ~/Linda.conf
 }
 
 linda_conf_listen_no () {
+# Append info to a Lind.conf file
 echo "listen=0
 "  >> ~/Linda.conf
 }
 
 linda_conf_bind_lan () {
-echo "bind=10.0.0.1
+# Append info to a Lind.conf file
+echo "bind=${ipv4lan}
 " >> ~/Linda.conf
 }
 
 linda_conf_bind_ipv6 () {
+# Append info to a Lind.conf file
 echo "bind=${ipaddress}
 " >> ~/Linda.conf
 }
 
 linda_conf_connect () {
-echo "connect=10.0.0.1
+# Append info to a Lind.conf file
+echo "connect=${ipv4lan}
 " >> ~/Linda.conf
 }
 
 linda_conf_seeds () {
+# Append info to a Lind.conf file
 echo "seednode=seed1.linda-wallet.com
 seednode=seed2.linda-wallet.com
 seednode=seed3.linda-wallet.com
@@ -106,6 +113,7 @@ seednode=seed7.linda-wallet.com
 }
 
 linda_conf_mn () {
+# Append info to a Lind.conf file
 echo "masternode=1
 masternodeaddr=${ipaddress}:${port}
 masternodeprivkey=${masternodegenkey}
@@ -113,18 +121,42 @@ masternodeprivkey=${masternodegenkey}
 }
 
 linda_conf_stake () {
-# Append info to a Staking Wallet Lind.conf file
+# Append info to a Lind.conf file
 echo "staking=1
 " >> ~/Linda.conf
 }
 
-echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-echo "!                           !"
-echo "! 'Begin setup preferences' !"
-echo "!                           !"
-echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+linda_startup () {
+  # Add Lindad to startup if server is rebooted
+  if [ -f /usr/local/bin/Lindad ]; then
+   sed '$i<Lindad>!' >> /etc/rc.local
+  fi
+  if [ $counter != 0 ]; then
+    sed '$i<Lindad0${counter}>!' >> /etc/rc.local
+  fi
+
+}
+
+masternode_conf () {
+echo "something here
+" >> ~/.Linda/masternode.conf
+}
+
+bash_aliases () {
+echo "
+# Lindad0${counter}
+alias init0${counter}='Lindad0${counter} -datadir=/root/.Linda0${counter} -wallet=wallet00.dat'
+alias Lindad0${counter}='Lindad0${counter} -rpcuser=${rpcuser} -rpcpassword=${rpcpassword} -rpcport=${port}'
+alias getinfo0${counter}='Lindad0${counter} -rpcuser=${rpcuser} -rpcpassword=${rpcpassword} -rpcport=${port} getinfo'
+alias debug0${counter}='Lindad0${counter} -rpcuser=${rpcuser} -rpcpassword=${rpcpassword} -rpcport=${port} masternode debug'
+alias addy0${counter}='Lindad0${counter} -rpcuser=${rpcuser} -rpcpassword=${rpcpassword} -rpcport=${port} listreceivedbyaddress 0 true'
+alias stop0${counter}='Lindad0${counter} -rpcuser=${rpcuser} -rpcpassword=${rpcpassword} -rpcport=${port} stop'
+" >> ~/.bash_aliases
+source ~/.bashrc
+}
 
 linda_complete () {
+  # Start Lindad and show user information about the wallet and block progress
   Lindad
   sleep 5
   echo " "
@@ -159,8 +191,14 @@ linda_complete () {
   Lindad getinfo | grep blocks
 }
 
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+echo "!                           !"
+echo "! 'Begin setup preferences' !"
+echo "!                           !"
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
 PS3='Select your setup preference: '
-options=('Staking Wallet (Hot)' 'Standalone Masternode (Hot)' 'Control Masternode (Hot/Cool)' 'Multiple Control Masternodes (Hot/Cool)' 'Quit')
+options=('Staking Wallet (Hot)' 'Standalone Masternode (Hot)' 'Control Masternode (Hot/Cool)' 'Multiple Control Masternodes (Hot/Cool)' 'Cool Wallet' 'Quit')
 select opt in "${options[@]}"
 do
   case $opt in
@@ -200,6 +238,7 @@ do
         get_ip
         masternodegenkey=$(Lindad masternode genkey)
         Lindad stop
+        sleep 10
 
         linda_conf_mn
         mv ~/Linda.conf ~/.Linda/
@@ -209,6 +248,11 @@ do
         break
         ;;
     'Control Masternode (Hot/Cool)')
+        echo -n "This option is not fully tested yet"
+        echo -n "This option is not fully tested yet"
+        echo -n "This option is not fully tested yet"
+        echo -n "This option is not fully tested yet"
+        sleep 15
         # Ask user for masternode genkey
         echo -n "Enter your cool wallet genkey value & press Enter: "
         read -r masternodegenkey
@@ -231,42 +275,42 @@ do
         break
         ;;
     'Multiple Control Masternodes (Hot/Cool)')
+      echo -n "This option is not completed yet"
+        break
         ipv6_exist=$(/sbin/ifconfig ens3 | awk '/inet6/{print $3}' | grep 2001 | awk 'NR == 1 {print $1}' | wc -l)
-        if [[ $ipv6_exists = 0 ]]
-          then
-            echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-            echo '!        IPv6 DOES NOT SEEM TO BE CONFIGURED      !'
-            echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-            echo '!                                                 !'
-            echo '! Please enable from https://my.vultr.com/.       !'
-            echo '! Click into your server, then Settings > IPv6    !'
-            echo '! Then Assign IPv6 Network                        !'
-            echo '! Finally completing the steps in the guide       !'
-            echo '! Run this script again and select Yes next time  !'
-            echo '!                                                 !'
-            echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-            exit
-        elif [[ $ipv6_exists = 1 ]]
-          then
-            echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-            echo '!  IPv6 DOES NOT SEEM TO BE CORRECTLY CONFIGURED  !'
-            echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-            echo '!                                                 !'
-            echo '! Please check /etc/network/interfaces            !'
-            echo '! Ensure you have multiple entries for            !'
-            echo '! iface ens3 inet6 static                         !'
-            echo '!                                                 !'
-            echo '! Correct, Reboot the server and try again        !'
-            echo '!                                                 !'
-            echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-            exit
+        if [[ $ipv6_exists = 0 ]]; then
+          echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+          echo '!        IPv6 DOES NOT SEEM TO BE CONFIGURED      !'
+          echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+          echo '!                                                 !'
+          echo '! Please enable from https://my.vultr.com/.       !'
+          echo '! Click into your server, then Settings > IPv6    !'
+          echo '! Then Assign IPv6 Network                        !'
+          echo '! Finally completing the steps in the guide       !'
+          echo '! Run this script again and select Yes next time  !'
+          echo '!                                                 !'
+          echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+          exit
+        elif [[ $ipv6_exists = 1 ]]; then
+          echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+          echo '!  IPv6 DOES NOT SEEM TO BE CORRECTLY CONFIGURED  !'
+          echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+          echo '!                                                 !'
+          echo '! Please check /etc/network/interfaces            !'
+          echo '! Ensure you have multiple entries for            !'
+          echo '! iface ens3 inet6 static                         !'
+          echo '!                                                 !'
+          echo '! Correct this, reboot the server and try again   !'
+          echo '!                                                 !'
+          echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+          exit
         else
           echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
           echo '!               IPv6 IS CONFIGURED                !'
           echo '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
         fi
 
-        echo -n "How many total masternodes would you like to have?"
+        echo -n "How many total masternodes would you like to have? "
         read -r int
 
         temp_linda
@@ -276,6 +320,7 @@ do
         read -r masternodegenkey
         ipv6sub=$(/sbin/ifconfig ens3 | awk '/inet6/{print $3}' | grep 2001 | awk 'NR == 1 {print $1}')
         ipaddress='['${ipv6sub::-3}']'
+        ipv4lan=$(/sbin/ifconfig ens7 | awk '/inet/{print $2}' | awk 'NR == 1 {print $1}' | cut -c 6-)
 
         linda_conf_core
         linda_conf_listen_yes
@@ -289,6 +334,7 @@ do
         install_bootstrap
         mv ~/.Linda ~/.Linda01
         sudo mv /usr/local/bin/Lindad /usr/local/bin/Lindad01
+        sed '$i<Lindad01>!' >> /etc/rc.local
 
         counter=2
         until [ $counter -gt $int ]
@@ -299,10 +345,9 @@ do
             echo -n "Enter your NEXT cool wallet genkey value & press Enter: "
             read -r masternodegenkey
             ipv6sub=$(/sbin/ifconfig ens3 | awk '/inet6/{print $3}' | grep 2001 | awk 'NR == 2 {print $1}')
-              if [[ -z "$ipv6sub" ]]
-                then
-                  echo 'Second IPv6 Address not configured'
-                  break
+              if [[ -z "$ipv6sub" ]]; then
+                echo 'Second IPv6 Address not configured'
+                break
               fi
             ipaddress='['${ipv6sub::-3}']'
             port="$(($port + 10 ))"
@@ -316,6 +361,42 @@ do
             cp ~/Linda.conf ~/.Linda0${counter}/
 
             sudo cp /usr/local/bin/Lindad01 /usr/local/bin/Lindad0${counter}
+            sed '$i<Lindad0${counter}>!' >> /etc/rc.local
+
+            bash_aliases
+
+            ((counter++))
+          done
+        break
+        ;;
+    'Cool Wallet Setup')
+      echo -n "This option is not completed yet"
+        break
+      echo -n "How many total masternode addresses would you like to have?"
+      return -r int
+
+      temp_linda
+      install_security
+      install_linda
+      install_bootstrap
+      generate_rpc
+
+      linda_conf_core
+      linda_conf_listen_yes
+      linda_conf_seeds
+
+      Lindad
+      sleep 10
+
+      counter=1
+        until [ $counter -ge $int ]; then
+          do
+            addressalias=$(Lindad )
+            output=$(Lindad masternode outputs | awk 'NR == "(($counter + 1))" {print $1}')
+            index=$(Lindad masternode outputs | awk 'NR == "(($counter + 1))" {print $3}')
+            genkey=$(Lindad masternode genkey)
+            masternode_conf
+
             ((counter++))
           done
         break
