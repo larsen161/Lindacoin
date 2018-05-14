@@ -43,7 +43,7 @@ install_linda () {
 install_bootstrap () {
   # Get the bootstrap, then extract the bootstrap
   cd ~/.Linda
-  wget -O bootstrap.tar.gz https://transfer.sh/11Ngcx/linda-v2-bootstrap-2018-05-13.tar.gz
+  wget -O bootstrap.tar.gz https://transfer.sh/nXY5L/linda-v2-bootstrap-2018-05-14.tar.gz
   tar xf bootstrap.tar.gz
 }
 
